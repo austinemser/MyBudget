@@ -18,30 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let navigationController = self.window?.rootViewController as? UINavigationController
         let controller = navigationController?.topViewController as? ActivityListTVC
-        //TODO: put username in NSUserDefaults
-        let fetchRequest = NSFetchRequest(entityName: "Account")
-        fetchRequest.predicate = NSPredicate(format: "username = %@", "austinemser")
-        var account:Account?
-        do {
-            account = try managedObjectContext.executeFetchRequest(fetchRequest).first as? Account
-        } catch { }
         
-        if account == nil {
-            account = NSEntityDescription.insertNewObjectForEntityForName("Account", inManagedObjectContext: managedObjectContext) as? Account
-            account?.username = "austinemser"
-            saveContext()
-        }
-        
-        let dataSource = ActivityListDataSource(account: account!)
-        controller?.dataSource = dataSource
-        
-        
+
         let defaults = NSUserDefaults.standardUserDefaults()
         let isDatabasePreloaded = defaults.boolForKey("isDatabasePreloaded")
         if !isDatabasePreloaded {
             initDatabase()
             defaults.setBool(true, forKey: "isDatabasePreloaded")
         }
+        
+        let account = getDefaultAccount()
+        
+        let dataSource = ActivityListDataSource(account: account!)
+        controller?.dataSource = dataSource
         
         return true
     }
@@ -132,10 +121,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func getDefaultAccount() -> Account? {
+        let fetchRequest = NSFetchRequest(entityName: "Account")
+        fetchRequest.predicate = NSPredicate(format: "username = %@", "austinemser")
+        var account:Account?
+        do {
+            account = try managedObjectContext.executeFetchRequest(fetchRequest).first as? Account
+        } catch { }
+        
+        return account
+    }
+    
+    func createDefaultAccount() {
+        if getDefaultAccount() == nil {
+            let account = NSEntityDescription.insertNewObjectForEntityForName("Account", inManagedObjectContext: managedObjectContext) as! Account
+            account.username = "austinemser"
+            saveContext()
+        }
+    }
 
     func initDatabase() {
+        createDefaultAccount()
+        
         ActivityType.initDefaultActivityTypes()
     }
+    
+    
 }
 
 let ad = UIApplication.sharedApplication().delegate as! AppDelegate

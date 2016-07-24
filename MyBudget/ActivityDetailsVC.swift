@@ -22,15 +22,31 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        activityTypePicker.delegate = self
+        activityTypePicker.dataSource = self
+        
+        
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(ActivityDetailsVC.deletePressed))
         self.navigationItem.rightBarButtonItem = deleteButton
         
         getActivityTypes()
         
-        activityTypePicker.delegate = self
-        activityTypePicker.dataSource = self
+        populateData()
     }
 
+    func populateData() {
+        if let activity = activityToEdit {
+            nameField.text = activity.name
+            amountField.text = activity.amount?.stringValue
+            if let activityType = activity.activityType {
+                if let activityTypeIndex = activityTypes.indexOf(activityType) {
+                    activityTypePicker.selectRow(activityTypeIndex, inComponent: 0, animated: false)
+                }
+            }
+        }
+    }
+    
+    
     
     func getActivityTypes() {
         let fetchRequest = NSFetchRequest(entityName: "ActivityType")
@@ -71,6 +87,8 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         
         activity.activityType = activityTypes[activityTypePicker.selectedRowInComponent(0)]
+        
+        activity.account = ad.getDefaultAccount()
         
         ad.saveContext()
         self.navigationController?.popViewControllerAnimated(true)

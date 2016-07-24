@@ -14,20 +14,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="53M-BW-XfO">
-                            <rect key="frame" x="0.0" y="64" width="600" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="oldest"/>
-                                <segment title="newest"/>
-                            </segments>
-                            <connections>
-                                <action selector="changeSorting:" destination="eT4-Gy-5Hk" eventType="valueChanged" id="Yr6-mA-Im8"/>
-                            </connections>
-                        </segmentedControl>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="85" id="Ld6-M8-bWX" customClass="ActivityCell" customModule="MyBudget" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="121" width="600" height="85"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="85"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ld6-M8-bWX" id="lg3-8y-u6c">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="84.5"/>
@@ -214,6 +203,12 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="activityTypePicker" destination="r0G-kP-84p" id="dZH-2T-yLm"/>
+                        <outlet property="amountField" destination="2NT-fO-lAm" id="0ur-XS-PgQ"/>
+                        <outlet property="nameField" destination="78J-lX-cbx" id="qhF-qz-qLy"/>
+                        <outlet property="newActivityTypeField" destination="JFv-1B-Uyp" id="z4L-5Q-f4Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2X-7E-5A7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

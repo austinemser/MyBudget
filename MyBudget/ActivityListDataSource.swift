@@ -21,9 +21,8 @@ public class ActivityListDataSource: NSObject, ActivityListDataSourceProtocol  {
     }
     
     public func fetch() {
-        let sortAscending = NSUserDefaults.standardUserDefaults().integerForKey("sort") == 0 ? true : false
         
-        let sortDescriptor = NSSortDescriptor(key: "created", ascending: sortAscending)
+        let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         let sortDescriptors = [sortDescriptor]
         
         fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
@@ -46,7 +45,7 @@ public class ActivityListDataSource: NSObject, ActivityListDataSourceProtocol  {
 }
 
 // MARK: UItableViewDataSource
-// Could be abstracted, it is all generic
+// TODO: Abstract further
 extension ActivityListDataSource: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -68,6 +67,11 @@ extension ActivityListDataSource: UITableViewDataSource {
         return true
     }
     
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = self.fetchedResultsController.sections![section]
+        return sectionInfo.name
+    }
+    
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
@@ -80,7 +84,6 @@ extension ActivityListDataSource: UITableViewDataSource {
                 abort()
             }
         }
-        
     }
 }
 
@@ -100,7 +103,7 @@ extension ActivityListDataSource: NSFetchedResultsControllerDelegate {
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         

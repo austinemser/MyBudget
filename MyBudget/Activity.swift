@@ -16,6 +16,10 @@ public class Activity: NSManagedObject {
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         
-        self.created = NSDate()
+        let date = NSDate()
+        self.created = date
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE, MMMM d"
+        self.sectionIdentifier = formatter.stringFromDate(date)
     }
 }

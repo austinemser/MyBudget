@@ -28,25 +28,59 @@ public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerD
         tableView.dataSource = dataSource
         dataSource?.tableView = tableView
         
-        self.title = "\(dataSource?.account?.balance!)"
         
-        
+        setBalanceTitle()
     }
-
+    
+    func setBalanceTitle() {
+        let balance = dataSource?.account?.balance?.stringValue
+        self.title = balance
+    }
+    
     func changeBalance() {
+        let alertController = UIAlertController(title: "Balance", message: "Set balance", preferredStyle: .Alert)
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
+            let balanceField = alertController.textFields![0] as UITextField
+            if let balanceText = balanceField.text {
+                let balanceStr = NSString(string: balanceText)
+                let balanceDbl = balanceStr.doubleValue
+                self.updateBalance(balanceDbl)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
+            
+        }
+        alertController.addTextFieldWithConfigurationHandler { (balanceField) in
+            balanceField.placeholder = "balance"
+            balanceField.keyboardType = .DecimalPad
+        }
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
         
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func updateBalance(newBalance: Double) {
+        if let account = ad.getDefaultAccount() {
+            account.balance = newBalance
+            ad.saveContext()
+            setBalanceTitle()
+        }
     }
 
     func addActivity() {
-        let activity = NSEntityDescription.insertNewObjectForEntityForName("Activity", inManagedObjectContext: ad.managedObjectContext) as! Activity
-        activity.account = dataSource?.account
-        activity.amount = 100
-        activity.name = "Test Name 2"
-        ad.saveContext()
+        performSegueWithIdentifier("activityDetailsVC", sender: nil)
     }
-
-    @IBAction func changeSorting(sender: UISegmentedControl) {
-        userDefaults.setInteger(sender.selectedSegmentIndex, forKey: "sort")
-        dataSource?.fetch()
+    
+    public override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let activity = dataSource?.fetchedResultsController.objectAtIndexPath(indexPath) as! Activity
+        performSegueWithIdentifier("activityDetailsVC", sender: activity)
+    }
+    
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "activityDetailsVC" {
+            let destinationVC = segue.destinationViewController as? ActivityDetailsVC
+            destinationVC?.activityToEdit = sender as? Activity
+        }
     }
 }

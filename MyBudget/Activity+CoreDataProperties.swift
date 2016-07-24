@@ -2,7 +2,7 @@
 //  Activity+CoreDataProperties.swift
 //  MyBudget
 //
-//  Created by Austin Emser on 7/23/16.
+//  Created by Austin Emser on 7/24/16.
 //  Copyright © 2016 AustinEmser. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,7 @@ extension Activity {
     @NSManaged var name: String?
     @NSManaged var type: String?
     @NSManaged var created: NSDate?
+    @NSManaged var sectionIdentifier: String?
     @NSManaged var account: Account?
     @NSManaged var activityType: ActivityType?
 
