@@ -90,6 +90,10 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         activity.account = ad.getDefaultAccount()
         
+        if let balance = activity.account?.balance?.doubleValue, let amount = activity.amount?.doubleValue {
+            activity.account?.balance = balance - amount
+        }
+        
         ad.saveContext()
         self.navigationController?.popViewControllerAnimated(true)
     }
