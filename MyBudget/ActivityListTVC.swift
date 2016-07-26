@@ -11,7 +11,6 @@ import CoreData
 
 public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
 
-    public var userDefaults = NSUserDefaults.standardUserDefaults()
     public var dataProvider: ActivityListDataProviderProtocol?
     var fetchedResultsController: NSFetchedResultsController? = nil
     

@@ -49,6 +49,11 @@ class ActivityListTVCUnitTests: XCTestCase {
         
         XCTAssertNil(mockDataProvider.tableView, "Table view should be nil before loading")
         
-        
+        let _ = viewController.view
+
+        XCTAssertTrue(mockDataProvider.tableView != nil, "The table view should be set")
+        XCTAssert(mockDataProvider.tableView === viewController.tableView, "The Table view should be set to the table view of the data source")
     }
+
+    
 }
