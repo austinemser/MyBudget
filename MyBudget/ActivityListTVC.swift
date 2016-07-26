@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UIAlertViewDelegate {
+public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UIAlertViewDelegate, ActivityDetailsVCProtocol {
 
     public var userDefaults = NSUserDefaults.standardUserDefaults()
     public var dataSource: ActivityListDataSource?
@@ -35,6 +35,10 @@ public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerD
     func setBalanceTitle() {
         let balance = dataSource?.account?.balance?.stringValue
         self.title = balance
+    }
+    
+    func updateBalance() {
+        setBalanceTitle()
     }
     
     func changeBalance() {
@@ -81,6 +85,7 @@ public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerD
         if segue.identifier == "activityDetailsVC" {
             let destinationVC = segue.destinationViewController as? ActivityDetailsVC
             destinationVC?.activityToEdit = sender as? Activity
+            destinationVC?.delegate = self
         }
     }
 }
