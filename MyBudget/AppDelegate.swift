@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let account = getDefaultAccount()
         
-        let dataSource = ActivityListDataSource(account: account!)
-        controller?.dataSource = dataSource
+        let dataProvider = ActivityListDataProvider(account: account!)
+        controller?.dataProvider = dataProvider
         
         return true
     }

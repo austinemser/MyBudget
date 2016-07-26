@@ -22,4 +22,10 @@ class ActivityType: NSManagedObject {
         }
         ad.saveContext()
     }
+    
+    class func create(name: String) {
+        let activityType = NSEntityDescription.insertNewObjectForEntityForName("ActivityType", inManagedObjectContext: ad.managedObjectContext) as! ActivityType
+        activityType.name = name
+        ad.saveContext()
+    }
 }

@@ -9,11 +9,11 @@
 import UIKit
 import CoreData
 
-public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UIAlertViewDelegate {
+public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
 
     public var userDefaults = NSUserDefaults.standardUserDefaults()
-    public var dataSource: ActivityListDataSource?
-    
+    public var dataProvider: ActivityListDataProviderProtocol?
+    var fetchedResultsController: NSFetchedResultsController? = nil
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -24,16 +24,16 @@ public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerD
         let balanceButton = UIBarButtonItem(barButtonSystemItem: .Organize, target: self, action: #selector(ActivityListTVC.changeBalance))
         self.navigationItem.leftBarButtonItem = balanceButton
         
-        assert(dataSource != nil, "datasrouce should not be nil here")
-        tableView.dataSource = dataSource
-        dataSource?.tableView = tableView
+        assert(dataProvider != nil, "datasrouce should not be nil here")
+        tableView.dataSource = dataProvider
+        dataProvider?.tableView = tableView
         
         
         setBalanceTitle()
     }
     
     func setBalanceTitle() {
-        let balance = dataSource?.account?.balance?.stringValue
+        let balance = dataProvider?.account?.balance?.stringValue
         self.title = balance
     }
     
@@ -73,7 +73,7 @@ public class ActivityListTVC: UITableViewController, NSFetchedResultsControllerD
     }
     
     public override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let activity = dataSource?.fetchedResultsController.objectAtIndexPath(indexPath) as! Activity
+        let activity = dataProvider?.fetchedResultsController!.objectAtIndexPath(indexPath) as! Activity
         performSegueWithIdentifier("activityDetailsVC", sender: activity)
     }
     

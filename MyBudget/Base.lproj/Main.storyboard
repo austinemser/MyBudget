@@ -9,7 +9,7 @@
         <!--Root View Controller-->
         <scene sceneID="q8T-0d-hOQ">
             <objects>
-                <tableViewController id="eT4-Gy-5Hk" customClass="ActivityListTVC" customModule="MyBudget" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ActivityListTVC" id="eT4-Gy-5Hk" customClass="ActivityListTVC" customModule="MyBudget" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="28" sectionFooterHeight="28" id="td6-yy-uCA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -9,11 +9,11 @@
 import UIKit
 import CoreData
 
-public class ActivityListDataSource: NSObject, ActivityListDataSourceProtocol  {
+public class ActivityListDataProvider: NSObject, ActivityListDataProviderProtocol  {
     public var managedObjectContext: NSManagedObjectContext?
     public var account: Account?
     weak public var tableView: UITableView!
-    var _fetchedResultsController: NSFetchedResultsController? = nil
+    public var fetchedResultsController: NSFetchedResultsController? = nil
     
     init(account: Account) {
         self.account = account
@@ -25,35 +25,32 @@ public class ActivityListDataSource: NSObject, ActivityListDataSourceProtocol  {
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         let sortDescriptors = [sortDescriptor]
         
-        fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
+        _fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
         do {
-            try fetchedResultsController.performFetch()
+            try _fetchedResultsController.performFetch()
         } catch let error as NSError {
             print("error :\(error)")
         }
         tableView.reloadData()
     }
     
-    public func addActivity(activity: Activity) {
-        //TODO:
-    }
     
     func configureCell(cell: ActivityCell, atIndexPath indexPath: NSIndexPath) {
-        let activity = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Activity
+        let activity = self._fetchedResultsController.objectAtIndexPath(indexPath) as! Activity
         cell.configureCell(activity)
     }
 }
 
 // MARK: UItableViewDataSource
 // TODO: Abstract further
-extension ActivityListDataSource: UITableViewDataSource {
+extension ActivityListDataProvider: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        return self._fetchedResultsController.sections?.count ?? 0
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
+        let sectionInfo = self._fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }
     
@@ -68,14 +65,14 @@ extension ActivityListDataSource: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionInfo = self.fetchedResultsController.sections![section]
+        let sectionInfo = self._fetchedResultsController.sections![section]
         return sectionInfo.name
     }
     
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
+            let context = self._fetchedResultsController.managedObjectContext
+            context.deleteObject(self._fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
             
             do {
                 try context.save()
@@ -87,11 +84,11 @@ extension ActivityListDataSource: UITableViewDataSource {
     }
 }
 
-extension ActivityListDataSource: NSFetchedResultsControllerDelegate {
+extension ActivityListDataProvider: NSFetchedResultsControllerDelegate {
     
-    var fetchedResultsController: NSFetchedResultsController {
-        if _fetchedResultsController != nil {
-            return _fetchedResultsController!
+    var _fetchedResultsController: NSFetchedResultsController {
+        if fetchedResultsController != nil {
+            return fetchedResultsController!
         }
         
         let fetchRequest = NSFetchRequest()
@@ -105,17 +102,17 @@ extension ActivityListDataSource: NSFetchedResultsControllerDelegate {
         
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         aFetchedResultsController.delegate = self
-        _fetchedResultsController = aFetchedResultsController
+        fetchedResultsController = aFetchedResultsController
         
         do {
-            try _fetchedResultsController!.performFetch()
+            try fetchedResultsController!.performFetch()
         } catch let error as NSError {
             print("performFetch error: \(error.localizedDescription)")
             
             abort()
         }
         
-        return _fetchedResultsController!
+        return fetchedResultsController!
     }
     
     public func controllerWillChangeContent(controller: NSFetchedResultsController) {

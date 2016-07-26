@@ -99,10 +99,10 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     @IBAction func createActivityTypePressed() {
-        let activityType = NSEntityDescription.insertNewObjectForEntityForName("ActivityType", inManagedObjectContext: ad.managedObjectContext) as! ActivityType
-        activityType.name = newActivityTypeField.text
-        ad.saveContext()
-        getActivityTypes()
+        if let newActivityTypeName = newActivityTypeField.text {
+            ActivityType.create(newActivityTypeName)
+            getActivityTypes()
+        }
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
