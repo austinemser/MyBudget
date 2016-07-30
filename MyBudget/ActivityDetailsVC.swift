@@ -9,15 +9,23 @@
 import UIKit
 import CoreData
 
+protocol ActivityDetailsVCDelegate : class {
+    func updateBalance()
+}
+
 class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var activityTypePicker: UIPickerView!
     @IBOutlet weak var nameField: CustomTextField!
     @IBOutlet weak var amountField: CustomTextField!
     @IBOutlet weak var newActivityTypeField: CustomTextField!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     var activityToEdit: Activity?
     var activityTypes = [ActivityType]()
+    var delegate:ActivityDetailsVCDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +100,7 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         if let balance = activity.account?.balance?.doubleValue, let amount = activity.amount?.doubleValue {
             activity.account?.balance = balance - amount
+            delegate?.updateBalance()
         }
         
         ad.saveContext()

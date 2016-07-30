@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
+public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, ActivityDetailsVCDelegate {
 
     public var dataProvider: ActivityListDataProviderProtocol?
     var fetchedResultsController: NSFetchedResultsController? = nil
@@ -20,9 +20,6 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ActivityListTVC.addActivity))
         self.navigationItem.rightBarButtonItem = addButton
         
-        let balanceButton = UIBarButtonItem(barButtonSystemItem: .Organize, target: self, action: #selector(ActivityListTVC.changeBalance))
-        self.navigationItem.leftBarButtonItem = balanceButton
-        
         assert(dataProvider != nil, "datasrouce should not be nil here")
         tableView.dataSource = dataProvider
         dataProvider?.tableView = tableView
@@ -31,32 +28,13 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
         setBalanceTitle()
     }
     
+    func updateBalance() {
+        setBalanceTitle()
+    }
+    
     func setBalanceTitle() {
         let balance = dataProvider?.account?.balance?.stringValue
         self.title = balance
-    }
-    
-    func changeBalance() {
-        let alertController = UIAlertController(title: "Balance", message: "Set balance", preferredStyle: .Alert)
-        let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
-            let balanceField = alertController.textFields![0] as UITextField
-            if let balanceText = balanceField.text {
-                let balanceStr = NSString(string: balanceText)
-                let balanceDbl = balanceStr.doubleValue
-                self.updateBalance(balanceDbl)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
-            
-        }
-        alertController.addTextFieldWithConfigurationHandler { (balanceField) in
-            balanceField.placeholder = "balance"
-            balanceField.keyboardType = .DecimalPad
-        }
-        alertController.addAction(saveAction)
-        alertController.addAction(cancelAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func updateBalance(newBalance: Double) {
@@ -80,6 +58,7 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
         if segue.identifier == "activityDetailsVC" {
             let destinationVC = segue.destinationViewController as? ActivityDetailsVC
             destinationVC?.activityToEdit = sender as? Activity
+            destinationVC?.delegate = self
         }
     }
 }

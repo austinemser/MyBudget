@@ -111,6 +111,13 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		6EC033C61D4D08AF00C58156 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
 		6EDE6BE51D3DB6AA00ACC7D2 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +143,7 @@
 			children = (
 				6E05D1391D42A0E60098C7B5 /* View */,
 				6EDE6C381D3F226300ACC7D2 /* Model */,
+				6EC033C61D4D08AF00C58156 /* Account */,
 				6EDE6C291D3F219100ACC7D2 /* Activity */,
 				6EDE6BF51D3DB6AA00ACC7D2 /* Main.storyboard */,
 				6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */,
@@ -259,6 +267,7 @@
 				TargetAttributes = {
 					6EDE6BED1D3DB6AA00ACC7D2 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = ZDS532NL88;
 					};
 					6EDE6C041D3DB6AB00ACC7D2 = {
 						CreatedOnToolsVersion = 7.3;
@@ -481,11 +490,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBudget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ae.com.MyBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -493,11 +505,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBudget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ae.com.MyBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

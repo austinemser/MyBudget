@@ -14,11 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let navigationController = self.window?.rootViewController as? UINavigationController
+        let tabBarController = self.window?.rootViewController as? UITabBarController
+        let navigationController = tabBarController?.viewControllers![0] as? UINavigationController
         let controller = navigationController?.topViewController as? ActivityListTVC
-        
 
         let defaults = NSUserDefaults.standardUserDefaults()
         let isDatabasePreloaded = defaults.boolForKey("isDatabasePreloaded")
