@@ -17,11 +17,12 @@ class ActivityCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        amountLabel.textColor = UIColor.redColor()
     }
 
     func configureCell(activity: Activity) {
         nameLabel.text = activity.name
-        amountLabel.text = activity.amount?.stringValue
+        amountLabel.text = activity.amount?.currencyValue
         activityTypeLabel.text = activity.activityType?.name
     }
 

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = self.window?.rootViewController as? UITabBarController
         let navigationController = tabBarController?.viewControllers![0] as? UINavigationController
         let controller = navigationController?.topViewController as? ActivityListTVC
-
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         let isDatabasePreloaded = defaults.boolForKey("isDatabasePreloaded")
         if !isDatabasePreloaded {
@@ -26,9 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.setBool(true, forKey: "isDatabasePreloaded")
         }
         
-        let account = getDefaultAccount()
+        let user = getDefaultUser()
+        var budget: Budget!
         
-        let dataProvider = ActivityListDataProvider(account: account!)
+        if let tmpBudget = user?.activeBudget {
+            budget = tmpBudget
+        } else {
+            //TODO: set budget
+        }
+        let dataProvider = ActivityListDataProvider(budget: budget)
         controller?.dataProvider = dataProvider
         
         return true
@@ -121,27 +127,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func getDefaultAccount() -> Account? {
-        let fetchRequest = NSFetchRequest(entityName: "Account")
+    func getDefaultUser() -> User? {
+        let fetchRequest = NSFetchRequest(entityName: "User")
         fetchRequest.predicate = NSPredicate(format: "username = %@", "austinemser")
-        var account:Account?
+        var user:User?
         do {
-            account = try managedObjectContext.executeFetchRequest(fetchRequest).first as? Account
+            user = try managedObjectContext.executeFetchRequest(fetchRequest).first as? User
         } catch { }
         
-        return account
+        return user
     }
     
-    func createDefaultAccount() {
-        if getDefaultAccount() == nil {
-            let account = NSEntityDescription.insertNewObjectForEntityForName("Account", inManagedObjectContext: managedObjectContext) as! Account
-            account.username = "austinemser"
+    func createDefaultUser() {
+        if getDefaultUser() == nil {
+            let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: managedObjectContext) as! User
+            user.username = "austinemser"
             saveContext()
         }
     }
 
     func initDatabase() {
-        createDefaultAccount()
+        createDefaultUser()
         
         ActivityType.initDefaultActivityTypes()
     }

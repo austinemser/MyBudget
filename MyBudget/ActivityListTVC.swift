@@ -12,7 +12,6 @@ import CoreData
 public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, ActivityDetailsVCDelegate {
 
     public var dataProvider: ActivityListDataProviderProtocol?
-    var fetchedResultsController: NSFetchedResultsController? = nil
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -29,17 +28,19 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     }
     
     func updateBalance() {
+        
+        self.dataProvider?.budget?.updateBalance()
         setBalanceTitle()
     }
     
     func setBalanceTitle() {
-        let balance = dataProvider?.account?.balance?.stringValue
-        self.title = balance
+        let balance = dataProvider?.budget?.balance?.currencyValue
+        self.navigationItem.title = balance
     }
     
     func updateBalance(newBalance: Double) {
-        if let account = ad.getDefaultAccount() {
-            account.balance = newBalance
+        if let budget = dataProvider?.budget {
+            budget.balance = newBalance
             ad.saveContext()
             setBalanceTitle()
         }
@@ -59,6 +60,9 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
             let destinationVC = segue.destinationViewController as? ActivityDetailsVC
             destinationVC?.activityToEdit = sender as? Activity
             destinationVC?.delegate = self
+            let backItem = UIBarButtonItem()
+            backItem.title = "Activity"
+            navigationItem.backBarButtonItem = backItem
         }
     }
 }

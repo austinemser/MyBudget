@@ -11,13 +11,13 @@ import CoreData
 
 public class ActivityListDataProvider: NSObject, ActivityListDataProviderProtocol  {
     public var managedObjectContext: NSManagedObjectContext?
-    public var account: Account?
+    public var budget: Budget?
     weak public var tableView: UITableView!
     public var fetchedResultsController: NSFetchedResultsController? = nil
     
-    init(account: Account) {
-        self.account = account
-        self.managedObjectContext = account.managedObjectContext
+    init(budget: Budget) {
+        self.budget = budget
+        self.managedObjectContext = budget.managedObjectContext
     }
     
     public func fetch() {
@@ -94,7 +94,7 @@ extension ActivityListDataProvider: NSFetchedResultsControllerDelegate {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName("Activity", inManagedObjectContext: self.managedObjectContext!)
         fetchRequest.entity = entity
-        fetchRequest.predicate = NSPredicate(format: "account = %@", self.account!)
+        fetchRequest.predicate = NSPredicate(format: "budget = %@", self.budget!)
         fetchRequest.fetchBatchSize = 20
         
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)

@@ -29,13 +29,16 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        scrollView.contentSize.height = 750
+        
         activityTypePicker.delegate = self
         activityTypePicker.dataSource = self
         
         
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(ActivityDetailsVC.deletePressed))
-        self.navigationItem.rightBarButtonItem = deleteButton
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(ActivityDetailsVC.saveActivity))
+        self.navigationItem.rightBarButtonItems = [saveButton,deleteButton]
         
         getActivityTypes()
         
@@ -55,7 +58,6 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     
-    
     func getActivityTypes() {
         let fetchRequest = NSFetchRequest(entityName: "ActivityType")
         do {
@@ -70,12 +72,13 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         if let activity = activityToEdit {
             ad.managedObjectContext.deleteObject(activity)
             ad.saveContext()
+            delegate?.updateBalance()
         }
         
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func savePressed() {
+    func saveActivity() {
         var activity: Activity!
         
         if activityToEdit == nil {
@@ -95,17 +98,17 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         
         activity.activityType = activityTypes[activityTypePicker.selectedRowInComponent(0)]
-        
-        activity.account = ad.getDefaultAccount()
-        
-        if let balance = activity.account?.balance?.doubleValue, let amount = activity.amount?.doubleValue {
-            activity.account?.balance = balance - amount
-            delegate?.updateBalance()
-        }
-        
+        activity.budget = ad.getDefaultUser()?.activeBudget
         ad.saveContext()
+        
+        delegate?.updateBalance()
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    @IBAction func savePressed() {
+        self.saveActivity()
+    }
+    
     
     @IBAction func createActivityTypePressed() {
         if let newActivityTypeName = newActivityTypeField.text {

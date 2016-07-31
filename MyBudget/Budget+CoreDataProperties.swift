@@ -1,5 +1,5 @@
 //
-//  Account+CoreDataProperties.swift
+//  Budget+CoreDataProperties.swift
 //  MyBudget
 //
 //  Created by Austin Emser on 7/30/16.
@@ -12,11 +12,13 @@
 import Foundation
 import CoreData
 
-extension Account {
+extension Budget {
 
     @NSManaged var balance: NSNumber?
-    @NSManaged var name: String?
     @NSManaged var created: NSDate?
-    @NSManaged var budget: NSManagedObject?
+    @NSManaged var archived: NSDate?
+    @NSManaged var accounts: NSSet?
+    @NSManaged var activities: NSSet?
+    @NSManaged var user: User?
 
 }
