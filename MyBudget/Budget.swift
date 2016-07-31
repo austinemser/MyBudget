@@ -12,16 +12,15 @@ import CoreData
 
 public class Budget: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    enum BudgetError : ErrorType {
+        case UnarchivedBudget
+        case NoUser
+    }
+    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         
         self.created = NSDate()
-    }
-    
-    enum BudgetError : ErrorType {
-        case UnarchivedBudget
     }
     
     func updateBalance() {
@@ -39,11 +38,25 @@ public class Budget: NSManagedObject {
         } catch { }
     }
     
-    func createBudget(balance: Double) throws -> Budget {
-        guard self.user?.activeBudget == nil else {
+    class func create(balance: Double) throws -> Budget {
+        guard let user = ad.getDefaultUser() else {
+            throw BudgetError.NoUser
+        }
+        
+        guard user.activeBudget == nil else {
             throw BudgetError.UnarchivedBudget
         }
         
-        //TODO:
+        
+        let budget = NSEntityDescription.insertNewObjectForEntityForName("Budget", inManagedObjectContext: ad.managedObjectContext) as! Budget
+        budget.user = user
+        budget.balance = balance
+        
+        //Create default account
+        Account.create(0, name: "Safe To Spend", budget: budget)
+        
+        ad.saveContext()
+        
+        return budget
     }
 }

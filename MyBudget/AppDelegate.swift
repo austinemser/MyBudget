@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let tabBarController = self.window?.rootViewController as? UITabBarController
-        let navigationController = tabBarController?.viewControllers![0] as? UINavigationController
-        let controller = navigationController?.topViewController as? ActivityListTVC
+//        let tabBarController = self.window?.rootViewController as? UITabBarController
+//        let navigationController = tabBarController?.viewControllers![0] as? UINavigationController
+//        let controller = navigationController?.topViewController as? ActivityListTVC
         
         let defaults = NSUserDefaults.standardUserDefaults()
         let isDatabasePreloaded = defaults.boolForKey("isDatabasePreloaded")
@@ -32,10 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let tmpBudget = user?.activeBudget {
             budget = tmpBudget
         } else {
-            //TODO: set budget
+            do {
+                budget = try Budget.create(0)
+            } catch { }
         }
-        let dataProvider = ActivityListDataProvider(budget: budget)
-        controller?.dataProvider = dataProvider
+        
+  
+        let userInfo = ["Budget":budget]
+        NSNotificationCenter.defaultCenter().postNotificationName("BudgetAvailable", object: nil, userInfo: userInfo)
+        
         
         return true
     }
@@ -157,5 +162,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 let ad = UIApplication.sharedApplication().delegate as! AppDelegate
 
+
+//    [[NSNotificationCenter defaultCenter] postNotificationName:InspectionDatabaseAvailabilityNotification object:self userInfo:userInfo];
+
+//[[NSNotificationCenter defaultCenter] addObserverForName:InspectionDatabaseAvailabilityNotification
+//    object:nil
+//    queue:nil
+//    usingBlock: ^(NSNotification *note){
+//    self.managedObjectContext = note.userInfo[InspectionDatabaseAvailabilityContext];
+//    }];
 
 

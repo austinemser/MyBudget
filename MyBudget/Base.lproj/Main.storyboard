@@ -181,17 +181,41 @@
         <scene sceneID="Gn6-8M-3Lx">
             <objects>
                 <tableViewController id="1l4-cK-3YT" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5O2-nw-zF2">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="5O2-nw-zF2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gk5-FK-ohw">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="gk5-FK-ohw" customClass="AccountCell" customModule="MyBudget" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gk5-FK-ohw" id="iJb-m2-X4K">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0X8-jP-pyo">
+                                            <rect key="frame" x="8" y="11" width="106" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="106" id="xnu-YO-CT6"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AXR-Qh-zIX">
+                                            <rect key="frame" x="122" y="8" width="470" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="AXR-Qh-zIX" firstAttribute="baseline" secondItem="0X8-jP-pyo" secondAttribute="baseline" id="iMO-DE-Eve"/>
+                                        <constraint firstItem="AXR-Qh-zIX" firstAttribute="leading" secondItem="0X8-jP-pyo" secondAttribute="trailing" constant="8" id="kN5-Ud-orK"/>
+                                        <constraint firstItem="0X8-jP-pyo" firstAttribute="leading" secondItem="iJb-m2-X4K" secondAttribute="leadingMargin" id="kdS-dp-Wxp"/>
+                                        <constraint firstItem="0X8-jP-pyo" firstAttribute="centerY" secondItem="iJb-m2-X4K" secondAttribute="centerY" id="kyS-Ad-nr5"/>
+                                        <constraint firstItem="0X8-jP-pyo" firstAttribute="leading" secondItem="iJb-m2-X4K" secondAttribute="leadingMargin" id="mXo-zS-kUC"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="AXR-Qh-zIX" secondAttribute="trailing" id="xhh-jL-9X3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

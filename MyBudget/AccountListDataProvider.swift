@@ -11,20 +11,75 @@ import CoreData
 
 public class AccountListDataProvider: NSObject, AccountListDataProviderProtocol {
     public var managedObjectContext: NSManagedObjectContext?
-    public var accounts: [Account]?
+    public var budget: Budget?
     weak public var tableView: UITableView!
     public var fetchedResultsController: NSFetchedResultsController?
 
+    init(budget:Budget) {
+        self.budget = budget
+        self.managedObjectContext = budget.managedObjectContext
+    }
+    
     public func fetch() {
 
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         let sortDescriptors = [sortDescriptor]
 
-        
+        _fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
+        do {
+            try _fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("error: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    func configureCell(cell:AccountCell, atIndexPath indexPath:NSIndexPath) {
+        let account = self._fetchedResultsController.objectAtIndexPath(indexPath) as! Account
+        cell.configureCell(account)
     }
 }
 
-
+extension AccountListDataProvider: UITableViewDataSource {
+    
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self._fetchedResultsController.sections?.count ?? 0
+    }
+    
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = self._fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
+    }
+    
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AccountCell
+        self.configureCell(cell, atIndexPath: indexPath)
+        return cell
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = self._fetchedResultsController.sections![section]
+        return sectionInfo.name
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let context = self._fetchedResultsController.managedObjectContext
+            context.deleteObject(self._fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
+            
+            do {
+                try context.save()
+            } catch let error as NSError {
+                print("Delete Error \(error.localizedDescription)")
+                abort()
+            }
+        }
+    }
+}
 
 extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
 
@@ -79,8 +134,7 @@ extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
         case .Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            //TODO: Configure cell
-            break
+            self.configureCell(tableView.cellForRowAtIndexPath(indexPath!) as! AccountCell, atIndexPath: indexPath!)
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)

@@ -13,15 +13,17 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
 
     public var dataProvider: ActivityListDataProviderProtocol?
     
+    public override func awakeFromNib() {
+        NSNotificationCenter.defaultCenter().addObserverForName("BudgetAvailable", object: nil, queue: nil) { (note) in
+            self.dataProvider = ActivityListDataProvider(budget: note.userInfo!["Budget"] as! Budget)
+        }
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ActivityListTVC.addActivity))
         self.navigationItem.rightBarButtonItem = addButton
-        
-        assert(dataProvider != nil, "datasrouce should not be nil here")
-        tableView.dataSource = dataProvider
-        dataProvider?.tableView = tableView
         
         
         setBalanceTitle()

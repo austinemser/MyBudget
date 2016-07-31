@@ -29,6 +29,7 @@
 		6EC033D71D4D660500C58156 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033D31D4D660500C58156 /* Budget.swift */; };
 		6EC033D81D4D660500C58156 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033D41D4D660500C58156 /* User+CoreDataProperties.swift */; };
 		6EC033D91D4D660500C58156 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033D51D4D660500C58156 /* User.swift */; };
+		6EC033DB1D4E81CF00C58156 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033DA1D4E81CF00C58156 /* AccountCell.swift */; };
 		6EDE6BF21D3DB6AA00ACC7D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */; };
 		6EDE6BF71D3DB6AA00ACC7D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF51D3DB6AA00ACC7D2 /* Main.storyboard */; };
 		6EDE6BFA1D3DB6AA00ACC7D2 /* MyBudget.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF81D3DB6AA00ACC7D2 /* MyBudget.xcdatamodeld */; };
@@ -79,6 +80,7 @@
 		6EC033D31D4D660500C58156 /* Budget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		6EC033D41D4D660500C58156 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6EC033D51D4D660500C58156 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6EC033DA1D4E81CF00C58156 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		6EDE6BEE1D3DB6AA00ACC7D2 /* MyBudget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBudget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EDE6BF61D3DB6AA00ACC7D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				6EC033CC1D4D5B5200C58156 /* AccountListTVC.swift */,
 				6EC033CE1D4D5BD200C58156 /* AccountListDataProviderProtocol.swift */,
 				6EC033D01D4D627300C58156 /* AccountListDataProvider.swift */,
+				6EC033DA1D4E81CF00C58156 /* AccountCell.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				6E05D1381D406B530098C7B5 /* Account.swift in Sources */,
 				6EC033CF1D4D5BD200C58156 /* AccountListDataProviderProtocol.swift in Sources */,
 				6E05D13F1D42A42A0098C7B5 /* CustomTextField.swift in Sources */,
+				6EC033DB1D4E81CF00C58156 /* AccountCell.swift in Sources */,
 				6EC033C81D4D2C2100C58156 /* CustomNavigationBar.swift in Sources */,
 				6E05D1431D42B4160098C7B5 /* ActivityDetailsVC.swift in Sources */,
 				6E05D1351D406B530098C7B5 /* Activity+CoreDataProperties.swift in Sources */,

@@ -8,32 +8,55 @@
 
 import UIKit
 
-class AccountListTVC: UITableViewController {
+public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
 
-    override func viewDidLoad() {
+    public var dataProvider: AccountListDataProviderProtocol?
+    
+    public override func awakeFromNib() {
+        NSNotificationCenter.defaultCenter().addObserverForName("BudgetAvailable", object: nil, queue: nil) { (note) in
+            self.dataProvider = AccountListDataProvider(budget: note.userInfo!["budget"] as! Budget)
+        }
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AccountListTVC.addAccount))
-        self.navigationItem.rightBarButtonItem = addButton
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(AccountListTVC.save))
+        self.navigationItem.rightBarButtonItems = [addButton, saveButton]
+    
+    
+        assert(dataProvider != nil, "datasrouce should not be nil here")
+        tableView.dataSource = dataProvider
+        dataProvider?.tableView = tableView
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     func addAccount() {
-        //TODO: add an acction
+
+        let alertController = UIAlertController(title: "New Account", message: "Enter account name", preferredStyle: .Alert)
+        let createAction = UIAlertAction(title: "Create", style: .Default) { (_) in
+            let nameField = alertController.textFields![0] as UITextField
+            if let name = nameField.text {
+                Account.create(0, name: name, budget: self.dataProvider!.budget!)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
+        
+        }
+        alertController.addTextFieldWithConfigurationHandler { (nameField) in
+            nameField.placeholder = "name"
+
+        }
+        alertController.addAction(createAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func save() {
+        
     }
-    */
-
+    
 }

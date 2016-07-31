@@ -12,6 +12,12 @@ import CoreData
 
 public class Account: NSManagedObject {
 
+    public override func awakeFromInsert() {
+        super.awakeFromInsert()
+        
+        self.created = NSDate()
+    }
+    
     func updateBalance() {
         let fetchRequest = NSFetchRequest(entityName: "Activity")
         fetchRequest.predicate = NSPredicate(format: "account = %@", self)
@@ -20,10 +26,18 @@ public class Account: NSManagedObject {
             let activityTotal = activities.reduce(0.0) { $0 + ($1.amount?.doubleValue ?? 0) }
             if let currentBalance = self.balance {
                 self.balance = NSNumber(double: currentBalance.doubleValue - activityTotal)
-            } else {
-                //self.balance = NSNumber(double: 0.0 - activityTotal)
+                ad.saveContext()
             }
-            ad.saveContext()
         } catch { }
+    }
+    
+    class func create(balance: NSNumber, name: String, budget: Budget) -> Account? {
+        let account = NSEntityDescription.insertNewObjectForEntityForName("Account", inManagedObjectContext: ad.managedObjectContext) as! Account
+        account.balance = balance
+        account.budget = budget
+        account.name = name
+        ad.saveContext()
+        
+        return account
     }
 }

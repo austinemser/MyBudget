@@ -11,7 +11,7 @@ import CoreData
 
 public protocol AccountListDataProviderProtocol: UITableViewDataSource {
     var managedObjectContext: NSManagedObjectContext? { get }
-    var accounts: [Account]? { get }
+    var budget: Budget? { get }
     var fetchedResultsController: NSFetchedResultsController? { get }
     weak var tableView: UITableView! { get set }
     
