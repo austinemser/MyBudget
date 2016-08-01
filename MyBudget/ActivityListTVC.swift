@@ -16,7 +16,14 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     public override func awakeFromNib() {
         NSNotificationCenter.defaultCenter().addObserverForName("BudgetAvailable", object: nil, queue: nil) { (note) in
             self.dataProvider = ActivityListDataProvider(budget: note.userInfo!["Budget"] as! Budget)
+            self.setDataProvider()
         }
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setBalanceTitle()
     }
     
     override public func viewDidLoad() {
@@ -28,10 +35,12 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
         self.navigationItem.rightBarButtonItems = [addButton,editButton]
         
         assert(dataProvider != nil, "datasrouce should not be nil here")
+        setDataProvider()
+    }
+    
+    func setDataProvider() {
         tableView.dataSource = dataProvider
         dataProvider?.tableView = tableView
-        
-        setBalanceTitle()
     }
     
     func changeBudget() {
@@ -53,7 +62,8 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
                 let balanceStr = NSString(string: balanceText)
                 let balanceDbl = balanceStr.doubleValue
                 do {
-                try Budget.create(balanceDbl)
+                    let budget = try Budget.create(balanceDbl)
+                    budget.notifyNewBudget()
                 }
                 catch {
                     //todo: handle budget creation error

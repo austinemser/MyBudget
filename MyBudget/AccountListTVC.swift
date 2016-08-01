@@ -15,7 +15,14 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     public override func awakeFromNib() {
         NSNotificationCenter.defaultCenter().addObserverForName("BudgetAvailable", object: nil, queue: nil) { (note) in
             self.dataProvider = AccountListDataProvider(budget: note.userInfo!["Budget"] as! Budget)
+            self.setDataProvider()
         }
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setBalanceTitle()
     }
     
     public override func viewDidLoad() {
@@ -27,10 +34,13 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     
         
         assert(dataProvider != nil, "datasrouce should not be nil here")
+        
+        setDataProvider()
+    }
+    
+    func setDataProvider() {
         tableView.dataSource = dataProvider
         dataProvider?.tableView = tableView
-        
-        setBalanceTitle()
     }
 
     func changeBudget() {
