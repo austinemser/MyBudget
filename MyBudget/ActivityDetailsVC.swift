@@ -14,7 +14,7 @@ protocol ActivityDetailsVCDelegate : class {
 }
 
 class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+    
     @IBOutlet weak var activityTypePicker: UIPickerView!
     @IBOutlet weak var nameField: CustomTextField!
     @IBOutlet weak var amountField: CustomTextField!
@@ -44,7 +44,7 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         populateData()
     }
-
+    
     func populateData() {
         if let activity = activityToEdit {
             nameField.text = activity.name
@@ -81,27 +81,34 @@ class ActivityDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     func saveActivity() {
         var activity: Activity!
         
-        if activityToEdit == nil {
-            activity = NSEntityDescription.insertNewObjectForEntityForName("Activity", inManagedObjectContext: ad.managedObjectContext) as! Activity
-        } else {
-            activity = activityToEdit
+        if let budget = ad.getDefaultUser()?.activeBudget {
+            
+            if activityToEdit == nil {
+                activity = NSEntityDescription.insertNewObjectForEntityForName("Activity", inManagedObjectContext: ad.managedObjectContext) as! Activity
+            } else {
+                activity = activityToEdit
+            }
+            
+            if let name = nameField.text {
+                activity.name = name
+            }
+            
+            if let amount = amountField.text {
+                let amountStr = NSString(string: amount)
+                let amountDbl = amountStr.doubleValue
+                activity.amount = amountDbl
+                if let budgetBal = budget.balance?.doubleValue {
+                    budget.balance = NSNumber(double: (budgetBal - amountDbl))
+                }
+            }
+            
+            activity.activityType = activityTypes[activityTypePicker.selectedRowInComponent(0)]
+            activity.budget = budget
+            
+            ad.saveContext()
+            
+            delegate?.updateBalance()
         }
-        
-        if let name = nameField.text {
-            activity.name = name
-        }
-        
-        if let amount = amountField.text {
-            let amountStr = NSString(string: amount)
-            let amountDbl = amountStr.doubleValue
-            activity.amount = amountDbl
-        }
-        
-        activity.activityType = activityTypes[activityTypePicker.selectedRowInComponent(0)]
-        activity.budget = ad.getDefaultUser()?.activeBudget
-        ad.saveContext()
-        
-        delegate?.updateBalance()
         self.navigationController?.popViewControllerAnimated(true)
     }
     

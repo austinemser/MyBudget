@@ -28,21 +28,6 @@ public class Budget: NSManagedObject {
         ad.saveContext()
     }
     
-    func updateBalance() {
-        let fetchRequest = NSFetchRequest(entityName: "Activity")
-        fetchRequest.predicate = NSPredicate(format: "budget = %@", self)
-        do {
-            let activities = try self.managedObjectContext?.executeFetchRequest(fetchRequest) as! [Activity]
-            let activityTotal = activities.reduce(0.0) { $0 + ($1.amount?.doubleValue ?? 0) }
-            if let currentBalance = self.balance {
-                self.balance = NSNumber(double: currentBalance.doubleValue - activityTotal)
-            } else {
-                //self.balance = NSNumber(double: 0.0 - activityTotal)
-            }
-            ad.saveContext()
-        } catch { }
-    }
-    
     class func create(balance: Double) throws -> Budget {
         guard let user = ad.getDefaultUser() else {
             throw BudgetError.NoUser

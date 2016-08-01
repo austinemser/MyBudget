@@ -30,6 +30,9 @@
 		6EC033D91D4D660500C58156 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033D51D4D660500C58156 /* User.swift */; };
 		6EC033DB1D4E81CF00C58156 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033DA1D4E81CF00C58156 /* AccountCell.swift */; };
 		6EC033E31D4EBA2F00C58156 /* BudgetNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033E21D4EBA2F00C58156 /* BudgetNavigationController.swift */; };
+		6EC033E61D4EEF4400C58156 /* HistoryListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033E51D4EEF4400C58156 /* HistoryListTVC.swift */; };
+		6EC033E81D4EEF6000C58156 /* HistoryListDataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033E71D4EEF6000C58156 /* HistoryListDataProviderProtocol.swift */; };
+		6EC033EA1D4EEF6F00C58156 /* HistoryListDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC033E91D4EEF6F00C58156 /* HistoryListDataProvider.swift */; };
 		6EDE6BF21D3DB6AA00ACC7D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */; };
 		6EDE6BF71D3DB6AA00ACC7D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF51D3DB6AA00ACC7D2 /* Main.storyboard */; };
 		6EDE6BFA1D3DB6AA00ACC7D2 /* MyBudget.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6BF81D3DB6AA00ACC7D2 /* MyBudget.xcdatamodeld */; };
@@ -81,6 +84,9 @@
 		6EC033D51D4D660500C58156 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6EC033DA1D4E81CF00C58156 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		6EC033E21D4EBA2F00C58156 /* BudgetNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetNavigationController.swift; sourceTree = "<group>"; };
+		6EC033E51D4EEF4400C58156 /* HistoryListTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListTVC.swift; sourceTree = "<group>"; };
+		6EC033E71D4EEF6000C58156 /* HistoryListDataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListDataProviderProtocol.swift; sourceTree = "<group>"; };
+		6EC033E91D4EEF6F00C58156 /* HistoryListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryListDataProvider.swift; sourceTree = "<group>"; };
 		6EDE6BEE1D3DB6AA00ACC7D2 /* MyBudget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBudget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EDE6BF61D3DB6AA00ACC7D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -165,6 +171,16 @@
 			name = Abstract;
 			sourceTree = "<group>";
 		};
+		6EC033E41D4EEF1900C58156 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				6EC033E51D4EEF4400C58156 /* HistoryListTVC.swift */,
+				6EC033E71D4EEF6000C58156 /* HistoryListDataProviderProtocol.swift */,
+				6EC033E91D4EEF6F00C58156 /* HistoryListDataProvider.swift */,
+			);
+			name = History;
+			sourceTree = "<group>";
+		};
 		6EDE6BE51D3DB6AA00ACC7D2 = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +211,7 @@
 				6EC033C61D4D08AF00C58156 /* Account */,
 				6EDE6C291D3F219100ACC7D2 /* Activity */,
 				6EC033DE1D4EB7F500C58156 /* Budget */,
+				6EC033E41D4EEF1900C58156 /* History */,
 				6EDE6BF51D3DB6AA00ACC7D2 /* Main.storyboard */,
 				6EDE6BF11D3DB6AA00ACC7D2 /* AppDelegate.swift */,
 				6EDE6BFB1D3DB6AA00ACC7D2 /* Assets.xcassets */,
@@ -387,15 +404,18 @@
 			files = (
 				6E05D1471D43D1E20098C7B5 /* ActivityType.swift in Sources */,
 				6E97D9B01D47AA5900E777FD /* ActivityListDataProviderProtocol.swift in Sources */,
+				6EC033E61D4EEF4400C58156 /* HistoryListTVC.swift in Sources */,
 				6EC033D11D4D627300C58156 /* AccountListDataProvider.swift in Sources */,
 				6E05D1381D406B530098C7B5 /* Account.swift in Sources */,
 				6EC033CF1D4D5BD200C58156 /* AccountListDataProviderProtocol.swift in Sources */,
 				6E05D13F1D42A42A0098C7B5 /* CustomTextField.swift in Sources */,
+				6EC033EA1D4EEF6F00C58156 /* HistoryListDataProvider.swift in Sources */,
 				6EC033DB1D4E81CF00C58156 /* AccountCell.swift in Sources */,
 				6E05D1431D42B4160098C7B5 /* ActivityDetailsVC.swift in Sources */,
 				6E05D1351D406B530098C7B5 /* Activity+CoreDataProperties.swift in Sources */,
 				6EDE6C2B1D3F21A900ACC7D2 /* ActivityListTVC.swift in Sources */,
 				6E05D14B1D444B820098C7B5 /* ActivityCell.swift in Sources */,
+				6EC033E81D4EEF6000C58156 /* HistoryListDataProviderProtocol.swift in Sources */,
 				6E05D1371D406B530098C7B5 /* Account+CoreDataProperties.swift in Sources */,
 				6EDE6BF21D3DB6AA00ACC7D2 /* AppDelegate.swift in Sources */,
 				6E05D13B1D42A32C0098C7B5 /* MaterialView.swift in Sources */,

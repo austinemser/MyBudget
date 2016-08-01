@@ -16,7 +16,7 @@ class ActivityListTVCUnitTests: XCTestCase {
     var viewController: ActivityListTVC!
 
     class MockDataProvider: NSObject, ActivityListDataProviderProtocol {
-        var account: Account?
+        var budget: Budget?
         var managedObjectContext: NSManagedObjectContext?
         var fetchedResultsController: NSFetchedResultsController?
         weak var tableView: UITableView!

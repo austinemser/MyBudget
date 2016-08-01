@@ -79,7 +79,6 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     
     
     func updateBalance() {
-        self.dataProvider?.budget?.updateBalance()
         setBalanceTitle()
     }
     
