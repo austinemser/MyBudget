@@ -14,17 +14,17 @@ public class AccountListDataProvider: NSObject, AccountListDataProviderProtocol 
     public var budget: Budget?
     weak public var tableView: UITableView!
     public var fetchedResultsController: NSFetchedResultsController?
-
+    
     init(budget:Budget) {
         self.budget = budget
         self.managedObjectContext = budget.managedObjectContext
     }
     
     public func fetch() {
-
+        
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         let sortDescriptors = [sortDescriptor]
-
+        
         _fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors
         do {
             try _fetchedResultsController.performFetch()
@@ -82,40 +82,40 @@ extension AccountListDataProvider: UITableViewDataSource {
 }
 
 extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
-
+    
     var _fetchedResultsController: NSFetchedResultsController {
         if fetchedResultsController != nil {
             return fetchedResultsController!
         }
-
+        
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName("Account", inManagedObjectContext: self.managedObjectContext!)
         fetchRequest.entity = entity
         
         fetchRequest.fetchBatchSize = 20
-
+        
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
+        
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "name", cacheName: nil)
         aFetchedResultsController.delegate = self
         fetchedResultsController = aFetchedResultsController
-
+        
         do {
             try fetchedResultsController!.performFetch()
         } catch let error as NSError {
             print("performFetch error: \(error.localizedDescription)")
-
+            
             abort()
         }
-
+        
         return fetchedResultsController!
     }
-
+    
     public func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
     }
-
+    
     public func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
         switch type {
         case .Insert:
@@ -126,7 +126,7 @@ extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
             return
         }
     }
-
+    
     public func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch type {
         case .Insert:
@@ -140,7 +140,7 @@ extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
-
+    
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }

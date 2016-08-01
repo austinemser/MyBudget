@@ -37,10 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch { }
         }
         
-  
-        let userInfo = ["Budget":budget]
-        NSNotificationCenter.defaultCenter().postNotificationName("BudgetAvailable", object: nil, userInfo: userInfo)
-        
+        budget.notifyNewBudget()
         
         return true
     }

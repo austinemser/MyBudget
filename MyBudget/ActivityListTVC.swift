@@ -23,14 +23,62 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
         super.viewDidLoad()
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ActivityListTVC.addActivity))
-        self.navigationItem.rightBarButtonItem = addButton
         
+        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ActivityListTVC.changeBudget))
+        self.navigationItem.rightBarButtonItems = [addButton,editButton]
+        
+        assert(dataProvider != nil, "datasrouce should not be nil here")
+        tableView.dataSource = dataProvider
+        dataProvider?.tableView = tableView
         
         setBalanceTitle()
     }
     
-    func updateBalance() {
+    func changeBudget() {
+        let alertController = UIAlertController(title: "Balance", message: "Enter new balance", preferredStyle: .Alert)
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
+            let balanceField = alertController.textFields![0] as UITextField
+            if let balanceText = balanceField.text {
+                let balanceStr = NSString(string: balanceText)
+                let balanceDbl = balanceStr.doubleValue
+                self.dataProvider?.budget?.balance = NSNumber(double: balanceDbl)
+                self.setBalanceTitle()
+            }
+        }
         
+        let deleteAction = UIAlertAction(title: "Clear", style: .Destructive) { (_) in
+            self.dataProvider?.budget?.cache()
+            let balanceField = alertController.textFields![0] as UITextField
+            if let balanceText = balanceField.text {
+                let balanceStr = NSString(string: balanceText)
+                let balanceDbl = balanceStr.doubleValue
+                do {
+                try Budget.create(balanceDbl)
+                }
+                catch {
+                    //todo: handle budget creation error
+                }
+                self.setBalanceTitle()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
+            
+        }
+        
+        
+        alertController.addTextFieldWithConfigurationHandler { (balanceField) in
+            balanceField.placeholder = "balance"
+            balanceField.keyboardType = .DecimalPad
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func updateBalance() {
         self.dataProvider?.budget?.updateBalance()
         setBalanceTitle()
     }

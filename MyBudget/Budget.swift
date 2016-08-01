@@ -23,6 +23,11 @@ public class Budget: NSManagedObject {
         self.created = NSDate()
     }
     
+    func cache() {
+        self.archived = NSDate()
+        ad.saveContext()
+    }
+    
     func updateBalance() {
         let fetchRequest = NSFetchRequest(entityName: "Activity")
         fetchRequest.predicate = NSPredicate(format: "budget = %@", self)
@@ -47,16 +52,17 @@ public class Budget: NSManagedObject {
             throw BudgetError.UnarchivedBudget
         }
         
-        
         let budget = NSEntityDescription.insertNewObjectForEntityForName("Budget", inManagedObjectContext: ad.managedObjectContext) as! Budget
         budget.user = user
         budget.balance = balance
         
-        //Create default account
-        Account.create(0, name: "Safe To Spend", budget: budget)
-        
         ad.saveContext()
-        
+        budget.notifyNewBudget()
         return budget
+    }
+    
+    func notifyNewBudget() {
+        let userInfo = ["Budget":self]
+        NSNotificationCenter.defaultCenter().postNotificationName("BudgetAvailable", object: nil, userInfo: userInfo)
     }
 }

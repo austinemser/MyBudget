@@ -140,7 +140,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="N7e-ga-hez">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="N7e-ga-hez">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N7e-ga-hez" id="DFq-UV-M3D">
@@ -177,11 +177,11 @@
             </objects>
             <point key="canvasLocation" x="292" y="2867"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Account ListTVC-->
         <scene sceneID="Gn6-8M-3Lx">
             <objects>
-                <tableViewController id="1l4-cK-3YT" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="5O2-nw-zF2">
+                <tableViewController id="1l4-cK-3YT" customClass="AccountListTVC" customModule="MyBudget" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="5O2-nw-zF2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -203,20 +203,47 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AXR-Qh-zIX">
-                                            <rect key="frame" x="122" y="8" width="470" height="30"/>
+                                            <rect key="frame" x="122" y="8" width="379" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhI-dJ-dX4">
+                                            <rect key="frame" x="509" y="6" width="83" height="30"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="83" id="6cs-87-dJv"/>
+                                                <constraint firstAttribute="height" constant="30" id="BfN-qZ-wUY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <state key="normal" title="SAVE">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="nhI-dJ-dX4" firstAttribute="centerY" secondItem="iJb-m2-X4K" secondAttribute="centerY" id="PPb-NO-00x"/>
+                                        <constraint firstItem="nhI-dJ-dX4" firstAttribute="leading" secondItem="AXR-Qh-zIX" secondAttribute="trailing" constant="8" id="ayD-w4-PkG"/>
                                         <constraint firstItem="AXR-Qh-zIX" firstAttribute="baseline" secondItem="0X8-jP-pyo" secondAttribute="baseline" id="iMO-DE-Eve"/>
                                         <constraint firstItem="AXR-Qh-zIX" firstAttribute="leading" secondItem="0X8-jP-pyo" secondAttribute="trailing" constant="8" id="kN5-Ud-orK"/>
                                         <constraint firstItem="0X8-jP-pyo" firstAttribute="leading" secondItem="iJb-m2-X4K" secondAttribute="leadingMargin" id="kdS-dp-Wxp"/>
                                         <constraint firstItem="0X8-jP-pyo" firstAttribute="centerY" secondItem="iJb-m2-X4K" secondAttribute="centerY" id="kyS-Ad-nr5"/>
                                         <constraint firstItem="0X8-jP-pyo" firstAttribute="leading" secondItem="iJb-m2-X4K" secondAttribute="leadingMargin" id="mXo-zS-kUC"/>
+                                        <constraint firstItem="nhI-dJ-dX4" firstAttribute="trailing" secondItem="iJb-m2-X4K" secondAttribute="trailingMargin" id="vQc-cw-xlq"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="AXR-Qh-zIX" secondAttribute="trailing" id="xhh-jL-9X3"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="xhh-jL-9X3"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="balanceTextField" destination="AXR-Qh-zIX" id="diI-Ah-i3r"/>
+                                    <outlet property="saveButton" destination="nhI-dJ-dX4" id="Wai-u2-i4E"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

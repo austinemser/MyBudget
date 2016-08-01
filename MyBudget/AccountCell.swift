@@ -11,13 +11,18 @@ import UIKit
 class AccountCell: UITableViewCell {
 
     @IBOutlet weak var balanceTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        balanceTextField.keyboardType = .DecimalPad
+        balanceTextField.textAlignment = .Right
     }
-
+    
     func configureCell(account: Account) {
-        balanceTextField.text = "\(account.balance)"
+        balanceTextField.text = account.balance?.stringValue
+
     }
+    
 }
