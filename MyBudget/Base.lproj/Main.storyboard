@@ -118,7 +118,7 @@
         <scene sceneID="D6s-co-GBp">
             <objects>
                 <navigationController id="F6b-aP-BI9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Account" id="egj-Xr-kyC"/>
+                    <tabBarItem key="tabBarItem" title="Account" image="circle-user-7" id="egj-Xr-kyC"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jLg-nL-vNW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -411,7 +411,7 @@
         <scene sceneID="CfI-8M-keS">
             <objects>
                 <navigationController id="yDw-nW-x3c" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activity" id="piU-JR-lzS"/>
+                    <tabBarItem key="tabBarItem" title="Activity" image="text-list-7" id="piU-JR-lzS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="z3p-lk-dfZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -425,4 +425,8 @@
             <point key="canvasLocation" x="292" y="1367"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="circle-user-7" width="30" height="30"/>
+        <image name="text-list-7" width="30" height="30"/>
+    </resources>
 </document>

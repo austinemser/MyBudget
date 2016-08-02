@@ -583,7 +583,7 @@
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBudget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ae.com.MyBudget;
+				PRODUCT_BUNDLE_IDENTIFIER = ae.com.JustBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -598,7 +598,7 @@
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBudget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ae.com.MyBudget;
+				PRODUCT_BUNDLE_IDENTIFIER = ae.com.JustBudget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
