@@ -27,7 +27,9 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.hideKeyboardWhenTappedAround()
+        
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AccountListTVC.addAccount))
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(AccountListTVC.changeBudget))
         self.navigationItem.rightBarButtonItems = [addButton,editButton]
@@ -41,6 +43,10 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     func setDataProvider() {
         tableView.dataSource = dataProvider
         dataProvider?.tableView = tableView
+    }
+    
+    class func saveAccount(sender: AccountCell) {
+        print("\(sender)")
     }
 
     func changeBudget() {

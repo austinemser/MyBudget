@@ -8,12 +8,12 @@
 
 import UIKit
 
-class AccountCell: UITableViewCell {
+public class AccountCell: UITableViewCell {
 
     @IBOutlet weak var balanceTextField: UITextField!
-    @IBOutlet weak var saveButton: UIButton!
-    
-    override func awakeFromNib() {
+    @IBOutlet weak var saveButton: AccountCellSaveButton!
+    public var account: Account?
+    override public func awakeFromNib() {
         super.awakeFromNib()
         
         balanceTextField.keyboardType = .DecimalPad
@@ -21,8 +21,9 @@ class AccountCell: UITableViewCell {
     }
     
     func configureCell(account: Account) {
+        self.account = account
+        self.saveButton.accountCell = self
         balanceTextField.text = account.balance?.stringValue
-
     }
     
 }
