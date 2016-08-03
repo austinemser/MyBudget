@@ -11,13 +11,13 @@ import CoreData
 
 public class AccountListDataProvider: NSObject, AccountListDataProviderProtocol {
     public var managedObjectContext: NSManagedObjectContext?
-    public var budget: Budget?
+    public var user: User?
     weak public var tableView: UITableView!
     public var fetchedResultsController: NSFetchedResultsController?
     
-    init(budget:Budget) {
-        self.budget = budget
-        self.managedObjectContext = budget.managedObjectContext
+    init(user:User) {
+        self.user = user
+        self.managedObjectContext = user.managedObjectContext
     }
     
     public func fetch() {
@@ -104,8 +104,9 @@ extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName("Account", inManagedObjectContext: self.managedObjectContext!)
         fetchRequest.entity = entity
-        
         fetchRequest.fetchBatchSize = 20
+        
+        fetchRequest.predicate = NSPredicate(format: "user = %@", self.user!)
         
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]

@@ -12,12 +12,6 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
 
     public var dataProvider: AccountListDataProviderProtocol?
     
-    public override func awakeFromNib() {
-        NSNotificationCenter.defaultCenter().addObserverForName("BudgetAvailable", object: nil, queue: nil) { (note) in
-            self.dataProvider = AccountListDataProvider(budget: note.userInfo!["Budget"] as! Budget)
-            self.setDataProvider()
-        }
-    }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,6 +28,7 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(AccountListTVC.changeBudget))
         self.navigationItem.rightBarButtonItems = [addButton,editButton]
     
+        self.dataProvider = AccountListDataProvider(user: ad.getDefaultUser()!)
         
         assert(dataProvider != nil, "datasrouce should not be nil here")
         
@@ -56,7 +51,7 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
             if let balanceText = balanceField.text {
                 let balanceStr = NSString(string: balanceText)
                 let balanceDbl = balanceStr.doubleValue
-                self.dataProvider?.budget?.balance = NSNumber(double: balanceDbl)
+                self.dataProvider?.user?.activeBudget?.balance = NSNumber(double: balanceDbl)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
@@ -73,7 +68,7 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     }
     
     func setBalanceTitle() {
-        let balance = dataProvider?.budget?.balance?.currencyValue
+        let balance = dataProvider?.user?.activeBudget?.balance?.currencyValue
         self.navigationItem.title = balance
     }
     
@@ -83,7 +78,7 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
         let createAction = UIAlertAction(title: "Create", style: .Default) { (_) in
             let nameField = alertController.textFields![0] as UITextField
             if let name = nameField.text {
-                Account.create(0, name: name, budget: self.dataProvider!.budget!)
+                Account.create(0, name: name, user: self.dataProvider!.user!)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in

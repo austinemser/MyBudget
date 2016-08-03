@@ -19,10 +19,10 @@ public class Account: NSManagedObject {
     }
 
     
-    class func create(balance: NSNumber, name: String, budget: Budget) -> Account? {
+    class func create(balance: NSNumber, name: String, user: User) -> Account? {
         let account = NSEntityDescription.insertNewObjectForEntityForName("Account", inManagedObjectContext: ad.managedObjectContext) as! Account
         account.balance = balance
-        account.budget = budget
+        account.user = user
         account.name = name
         ad.saveContext()
         

@@ -72,6 +72,7 @@
 		6E05D1441D43D1E20098C7B5 /* ActivityType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ActivityType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6E05D1451D43D1E20098C7B5 /* ActivityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityType.swift; sourceTree = "<group>"; };
 		6E05D14A1D444B820098C7B5 /* ActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		6E614BE81D52AA9B008A146E /* MyBudget V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MyBudget V2.xcdatamodel"; sourceTree = "<group>"; };
 		6E97D9AB1D47A68F00E777FD /* ActivityListTVCUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListTVCUnitTests.swift; sourceTree = "<group>"; };
 		6E97D9AF1D47AA5900E777FD /* ActivityListDataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListDataProviderProtocol.swift; sourceTree = "<group>"; };
 		6E97D9B11D47AA7B00E777FD /* ActivityListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListDataProvider.swift; sourceTree = "<group>"; };
@@ -695,9 +696,10 @@
 		6EDE6BF81D3DB6AA00ACC7D2 /* MyBudget.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6E614BE81D52AA9B008A146E /* MyBudget V2.xcdatamodel */,
 				6EDE6BF91D3DB6AA00ACC7D2 /* MyBudget.xcdatamodel */,
 			);
-			currentVersion = 6EDE6BF91D3DB6AA00ACC7D2 /* MyBudget.xcdatamodel */;
+			currentVersion = 6E614BE81D52AA9B008A146E /* MyBudget V2.xcdatamodel */;
 			path = MyBudget.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
