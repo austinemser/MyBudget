@@ -42,6 +42,8 @@
 		6EDE6C0A1D3DB6AB00ACC7D2 /* MyBudgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6C091D3DB6AB00ACC7D2 /* MyBudgetTests.swift */; };
 		6EDE6C151D3DB6AB00ACC7D2 /* MyBudgetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6C141D3DB6AB00ACC7D2 /* MyBudgetUITests.swift */; };
 		6EDE6C2B1D3F21A900ACC7D2 /* ActivityListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE6C2A1D3F21A900ACC7D2 /* ActivityListTVC.swift */; };
+		6EF54B9D1D52CCB200DB4D5F /* AccountDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF54B9C1D52CCB200DB4D5F /* AccountDetailsTVC.swift */; };
+		6EF54B9F1D52E55C00DB4D5F /* AccountTypePickerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF54B9E1D52E55C00DB4D5F /* AccountTypePickerTVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,8 @@
 		6EDE6C141D3DB6AB00ACC7D2 /* MyBudgetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBudgetUITests.swift; sourceTree = "<group>"; };
 		6EDE6C161D3DB6AB00ACC7D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EDE6C2A1D3F21A900ACC7D2 /* ActivityListTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListTVC.swift; sourceTree = "<group>"; };
+		6EF54B9C1D52CCB200DB4D5F /* AccountDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailsTVC.swift; sourceTree = "<group>"; };
+		6EF54B9E1D52E55C00DB4D5F /* AccountTypePickerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTypePickerTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,8 @@
 				6EC033CE1D4D5BD200C58156 /* AccountListDataProviderProtocol.swift */,
 				6EC033D01D4D627300C58156 /* AccountListDataProvider.swift */,
 				6EC033DA1D4E81CF00C58156 /* AccountCell.swift */,
+				6EF54B9C1D52CCB200DB4D5F /* AccountDetailsTVC.swift */,
+				6EF54B9E1D52E55C00DB4D5F /* AccountTypePickerTVC.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -412,6 +418,7 @@
 				6EC033D11D4D627300C58156 /* AccountListDataProvider.swift in Sources */,
 				6E05D1381D406B530098C7B5 /* Account.swift in Sources */,
 				6EC033CF1D4D5BD200C58156 /* AccountListDataProviderProtocol.swift in Sources */,
+				6EF54B9F1D52E55C00DB4D5F /* AccountTypePickerTVC.swift in Sources */,
 				6EC033EC1D50272A00C58156 /* AccountCellSaveButton.swift in Sources */,
 				6E05D13F1D42A42A0098C7B5 /* CustomTextField.swift in Sources */,
 				6EC033EA1D4EEF6F00C58156 /* HistoryListDataProvider.swift in Sources */,
@@ -430,6 +437,7 @@
 				6E97D9B21D47AA7B00E777FD /* ActivityListDataProvider.swift in Sources */,
 				6EC033D61D4D660500C58156 /* Budget+CoreDataProperties.swift in Sources */,
 				6EC033E31D4EBA2F00C58156 /* BudgetNavigationController.swift in Sources */,
+				6EF54B9D1D52CCB200DB4D5F /* AccountDetailsTVC.swift in Sources */,
 				6EC033D81D4D660500C58156 /* User+CoreDataProperties.swift in Sources */,
 				6EC033D91D4D660500C58156 /* User.swift in Sources */,
 				6E05D1461D43D1E20098C7B5 /* ActivityType+CoreDataProperties.swift in Sources */,

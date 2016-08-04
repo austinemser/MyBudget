@@ -93,7 +93,7 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     }
     
     func setBalanceTitle() {
-        let balance = dataProvider?.budget?.balance?.currencyValue
+        let balance = dataProvider?.budget?.balance?.currencyString
         self.navigationItem.title = balance
     }
     

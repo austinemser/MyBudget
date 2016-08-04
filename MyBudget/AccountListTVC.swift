@@ -24,9 +24,10 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AccountListTVC.addAccount))
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(AccountListTVC.changeBudget))
-        self.navigationItem.rightBarButtonItems = [addButton,editButton]
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems
+        rightBarButtonItems?.append(editButton)
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
     
         self.dataProvider = AccountListDataProvider(user: ad.getDefaultUser()!)
         
@@ -40,10 +41,6 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
         dataProvider?.tableView = tableView
     }
     
-    class func saveAccount(sender: AccountCell) {
-        print("\(sender)")
-    }
-
     func changeBudget() {
         let alertController = UIAlertController(title: "Balance", message: "Enter new balance", preferredStyle: .Alert)
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (_) in
@@ -68,31 +65,34 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     }
     
     func setBalanceTitle() {
-        let balance = dataProvider?.user?.activeBudget?.balance?.currencyValue
+        let balance = dataProvider?.user?.activeBudget?.balance?.currencyString
         self.navigationItem.title = balance
     }
     
-    func addAccount() {
-
-        let alertController = UIAlertController(title: "New Account", message: "Enter account name", preferredStyle: .Alert)
-        let createAction = UIAlertAction(title: "Create", style: .Default) { (_) in
-            let nameField = alertController.textFields![0] as UITextField
-            if let name = nameField.text {
-                Account.create(0, name: name, user: self.dataProvider!.user!)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
+    @IBAction func saveAccountDetail(segue: UIStoryboardSegue) {
         
-        }
-        alertController.addTextFieldWithConfigurationHandler { (nameField) in
-            nameField.placeholder = "name"
-
-        }
-        alertController.addAction(createAction)
-        alertController.addAction(cancelAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func cancelAccountDetail(segue: UIStoryboardSegue) {
+        
+    }
     
+    public override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let account = self.dataProvider?.fetchedResultsController?.objectAtIndexPath(indexPath) as! Account
+        performSegueWithIdentifier("accountDetailsSegue", sender: account)
+    }
+    
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "accountDetailsSegue" {
+            let navController = segue.destinationViewController as! UINavigationController
+            let accountDetailsTVC = navController.viewControllers[0] as! AccountDetailsTVC
+            let account = sender as? Account
+            accountDetailsTVC.accountInfo = account?.accountInfo
+        }
+    }
 }
+
+
+
+
+

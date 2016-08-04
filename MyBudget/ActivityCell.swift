@@ -22,7 +22,7 @@ class ActivityCell: UITableViewCell {
 
     func configureCell(activity: Activity) {
         nameLabel.text = activity.name
-        amountLabel.text = activity.amount?.currencyValue
+        amountLabel.text = activity.amount?.currencyString
         activityTypeLabel.text = activity.activityType?.name
     }
 

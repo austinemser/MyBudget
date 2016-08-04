@@ -37,20 +37,8 @@ public class AccountListDataProvider: NSObject, AccountListDataProviderProtocol 
     func configureCell(cell:AccountCell, atIndexPath indexPath:NSIndexPath) {
         let account = self._fetchedResultsController.objectAtIndexPath(indexPath) as! Account
         cell.configureCell(account)
-        cell.saveButton.addTarget(self, action: #selector(AccountListDataProvider.saveAccount(_:)), forControlEvents: .TouchUpInside)
     }
     
-    public func saveAccount(accountCellSaveButton: AccountCellSaveButton) {
-        print("\(accountCellSaveButton)")
-        if let account = accountCellSaveButton.accountCell?.account, let balanceTextField = accountCellSaveButton.accountCell?.balanceTextField {
-            if let balanceText = balanceTextField.text {
-                if let balanceDbl = Double(balanceText) {
-                    account.balance = NSNumber(double: balanceDbl)
-                    ad.saveContext()
-                }
-            }
-        }
-    }
 }
 
 extension AccountListDataProvider: UITableViewDataSource {
@@ -111,7 +99,7 @@ extension AccountListDataProvider: NSFetchedResultsControllerDelegate {
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "name", cacheName: nil)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         fetchedResultsController = aFetchedResultsController
         

@@ -35,7 +35,7 @@ public class HistoryListDataProvider: NSObject, HistoryListDataProviderProtocol 
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let budget = self._fetchedResultsController.objectAtIndexPath(indexPath) as! Budget
-        cell.textLabel?.text = budget.balance?.currencyValue
+        cell.textLabel?.text = budget.balance?.currencyString
         cell.detailTextLabel?.text = "\(budget.archived)"
     }
 }

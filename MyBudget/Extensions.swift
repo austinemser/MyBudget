@@ -9,7 +9,7 @@
 import UIKit
 
 extension NSNumber {
-    var currencyValue: String? {
+    var currencyString: String? {
         get {
             let formatter = NSNumberFormatter()
             formatter.locale = NSLocale(localeIdentifier: "en_US")

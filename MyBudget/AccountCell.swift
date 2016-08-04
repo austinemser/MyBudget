@@ -10,20 +10,21 @@ import UIKit
 
 public class AccountCell: UITableViewCell {
 
-    @IBOutlet weak var balanceTextField: UITextField!
-    @IBOutlet weak var saveButton: AccountCellSaveButton!
-    public var account: Account?
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var accountTypeLabel: UILabel!
+    @IBOutlet weak var creditLimitLabel: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
         
-        balanceTextField.keyboardType = .DecimalPad
-        balanceTextField.textAlignment = .Right
     }
     
     func configureCell(account: Account) {
-        self.account = account
-        self.saveButton.accountCell = self
-        balanceTextField.text = account.balance?.stringValue
+        nameLabel.text = account.name
+        accountTypeLabel.text = "Checking"
+        creditLimitLabel.text = account.creditLimit?.currencyString
+        balanceLabel.text = account.balance?.currencyString
     }
     
 }

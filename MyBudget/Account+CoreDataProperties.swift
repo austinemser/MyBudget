@@ -17,6 +17,8 @@ extension Account {
     @NSManaged var balance: NSNumber?
     @NSManaged var created: NSDate?
     @NSManaged var name: String?
+    @NSManaged var type: NSNumber?
+    @NSManaged var creditLimit: NSNumber?
     @NSManaged var user: User?
 
 }

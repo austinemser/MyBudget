@@ -38,7 +38,7 @@ public class HistoryListTVC: UITableViewController {
     }
     
     func setBalanceTitle() {
-        let balance = dataProvider?.user?.activeBudget?.balance?.currencyValue
+        let balance = dataProvider?.user?.activeBudget?.balance?.currencyString
         self.navigationItem.title = balance
     }
 }

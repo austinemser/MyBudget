@@ -15,7 +15,6 @@ public protocol AccountListDataProviderProtocol: UITableViewDataSource {
     var fetchedResultsController: NSFetchedResultsController? { get }
     weak var tableView: UITableView! { get set }
     
-    func saveAccount(accountCellSaveButton: AccountCellSaveButton)
     func fetch()
 }
 
