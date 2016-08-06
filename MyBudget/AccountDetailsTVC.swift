@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountDetailsTVC: UITableViewController {
+class AccountDetailsTVC: UITableViewController, AccountTypePickerTVCDelegate {
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var balanceField: UITextField!
@@ -17,7 +17,9 @@ class AccountDetailsTVC: UITableViewController {
     
     var accountType: AccountType? {
         didSet {
-            detailLabel?.text = "\(accountType?.hashValue)"
+            if let acctType = accountType {
+                detailLabel?.text = "\(acctType)"
+            }
         }
     }
     
@@ -44,7 +46,8 @@ class AccountDetailsTVC: UITableViewController {
                 }
             }
             
-            return AccountInfo(balance: balance, name: name, accountType: nil, creditLimit: creditLimit, user: ad.getDefaultUser())
+            
+            return AccountInfo(balance: balance, name: name, accountType: self.accountType, creditLimit: creditLimit, user: ad.getDefaultUser())
         }
         set {
             if let _accountInfo = newValue {
@@ -60,21 +63,25 @@ class AccountDetailsTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+    }
+    
+    func selectedAccountType(accountType: AccountType?) {
+        self.accountType = accountType
     }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //TODO: ?
+        if segue.identifier == "AccountTypePickerSegue" {
+            if let accountTypePickerTVC = segue.destinationViewController as? AccountTypePickerTVC {
+                accountTypePickerTVC.delegate = self
+            }
+        }
     }
  
     @IBAction func unwindWithSelectedAccountType(segue: UIStoryboardSegue) {
-        if let accountTypePickerTVC = segue.sourceViewController as? AccountTypePickerTVC,
-            accountType = accountTypePickerTVC.accountType {
-            self.accountType = accountType
-        }
+        
     }
 }
 

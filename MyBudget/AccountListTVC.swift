@@ -54,6 +54,7 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
         let cancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { (_) in
             
         }
+        
         alertController.addTextFieldWithConfigurationHandler { (balanceField) in
             balanceField.placeholder = "balance"
             balanceField.keyboardType = .DecimalPad
@@ -70,7 +71,11 @@ public class AccountListTVC: UITableViewController, UIAlertViewDelegate {
     }
     
     @IBAction func saveAccountDetail(segue: UIStoryboardSegue) {
-        
+        if let accountDetailsTVC = segue.sourceViewController as? AccountDetailsTVC {
+            if let accountInfo = accountDetailsTVC.accountInfo {
+                Account.create(accountInfo)
+            }
+        }
     }
     
     @IBAction func cancelAccountDetail(segue: UIStoryboardSegue) {

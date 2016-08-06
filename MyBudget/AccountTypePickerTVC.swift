@@ -8,17 +8,23 @@
 
 import UIKit
 
+protocol AccountTypePickerTVCDelegate : class {
+    func selectedAccountType(accountType:AccountType?)
+}
+
 class AccountTypePickerTVC: UITableViewController {
     
     let accountTypes = ["Credit", "Checking", "Savings", "401k"]
+    var delegate:AccountTypePickerTVCDelegate?
     
     var selectedAccountTypeIndex: Int? {
         didSet {
-            let accountTypeIndex = Int32(selectedAccountTypeIndex!)
-            self.accountType = AccountType(rawValue: accountTypeIndex)
+            if let accountTypeIndex = selectedAccountTypeIndex {
+                let accountType = AccountType(rawValue: Int32(accountTypeIndex))
+                delegate?.selectedAccountType(accountType)
+            }
         }
     }
-    var accountType: AccountType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
