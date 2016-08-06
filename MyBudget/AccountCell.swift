@@ -22,7 +22,7 @@ public class AccountCell: UITableViewCell {
     
     func configureCell(account: Account) {
         nameLabel.text = account.name
-        accountTypeLabel.text = "Checking"
+        accountTypeLabel.text = "\(account.accountType)"
         creditLimitLabel.text = account.creditLimit?.currencyString
         balanceLabel.text = account.balance?.currencyString
     }

@@ -79,10 +79,7 @@ class AccountDetailsTVC: UITableViewController, AccountTypePickerTVCDelegate {
             }
         }
     }
- 
-    @IBAction func unwindWithSelectedAccountType(segue: UIStoryboardSegue) {
-        
-    }
+    
 }
 
 
