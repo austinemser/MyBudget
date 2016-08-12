@@ -9,6 +9,12 @@
 import Foundation
 import CoreData
 
+public struct ActivityInfo {
+    let amount: NSNumber?
+    let name: String?
+    let activityType: ActivityType?
+    let budget: Budget?
+}
 
 public class Activity: NSManagedObject {
 
@@ -21,5 +27,17 @@ public class Activity: NSManagedObject {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "EEEE, MMMM d"
         self.sectionIdentifier = formatter.stringFromDate(date)
+    }
+    
+    class func create(activityInfo: ActivityInfo) -> Activity {
+        let activity = NSEntityDescription.insertNewObjectForEntityForName("Activity", inManagedObjectContext: ad.managedObjectContext) as! Activity
+        activity.name = activityInfo.name
+        activity.amount = activityInfo.amount
+        activity.activityType = activityInfo.activityType
+        activity.budget = activityInfo.budget
+        
+        ad.saveContext()
+        
+        return activity
     }
 }

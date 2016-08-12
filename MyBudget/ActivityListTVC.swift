@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, ActivityDetailsVCDelegate {
+public class ActivityListTVC: UITableViewController, UIAlertViewDelegate {
 
     public var dataProvider: ActivityListDataProviderProtocol?
     
@@ -29,10 +29,10 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ActivityListTVC.addActivity))
-        
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(ActivityListTVC.changeBudget))
-        self.navigationItem.rightBarButtonItems = [addButton,editButton]
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems
+        rightBarButtonItems?.append(editButton)
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
         
         assert(dataProvider != nil, "datasrouce should not be nil here")
         setDataProvider()
@@ -87,11 +87,6 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    
-    func updateBalance() {
-        setBalanceTitle()
-    }
-    
     func setBalanceTitle() {
         let balance = dataProvider?.budget?.balance?.currencyString
         self.navigationItem.title = balance
@@ -104,6 +99,34 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
             setBalanceTitle()
         }
     }
+    
+    @IBAction func saveActivityDetailUnwindSegue(segue: UIStoryboardSegue) {
+        if let activityDetailsTVC = segue.sourceViewController as? ActivityDetailsTVC {
+            if let activityInfo = activityDetailsTVC.activityInfo {
+                if let activity = activityDetailsTVC.activityToEdit {
+                    activity.name = activityInfo.name
+                    activity.amount = activityInfo.amount
+                    activity.activityType = activityInfo.activityType
+                    ad.saveContext()
+                } else {
+                    Activity.create(activityInfo)
+                }
+            }
+        }
+    }
+
+    
+    @IBAction func saveAccountDetail(segue: UIStoryboardSegue) {
+        if let accountDetailsTVC = segue.sourceViewController as? AccountDetailsTVC {
+            if let accountInfo = accountDetailsTVC.accountInfo {
+                Account.create(accountInfo)
+            }
+        }
+    }
+    
+    @IBAction func cancelUnwindSegue(segue: UIStoryboardSegue) {
+        
+    }
 
     func addActivity() {
         performSegueWithIdentifier("activityDetailsVC", sender: nil)
@@ -115,13 +138,6 @@ public class ActivityListTVC: UITableViewController, UIAlertViewDelegate, Activi
     }
     
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "activityDetailsVC" {
-            let destinationVC = segue.destinationViewController as? ActivityDetailsVC
-            destinationVC?.activityToEdit = sender as? Activity
-            destinationVC?.delegate = self
-            let backItem = UIBarButtonItem()
-            backItem.title = "Activity"
-            navigationItem.backBarButtonItem = backItem
-        }
+
     }
 }
